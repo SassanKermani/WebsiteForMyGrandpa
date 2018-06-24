@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Slide Show </title>
+	<style>
+		.pics{
+			/*color: red;*/
+			text-align: center;
+			padding: 1%
+		}
+		#pic2{
+
+			display: block;
+			margin: auto;
+			
+			/*min-height: 300px;*/
+			height: 500px;
+			
+			/*padding-top: 2%;*/
+
+			border-radius: 25px;
+		}
+		#customTime{
+			width: 12%;
+		}
+		
+		#pamphlet{
+			width: 80%;
+			height: 100em;
+		}
+		
+		#eulogy{
+			width: 80%;
+			height: 70em;
+		}
+		
+		body{
+			background-color: #cccccc;
+		}
+
+	</style>
+</head>
+<body>
+	
+	<!-- <img src="pics/pamphlet.pdf" alt=""> -->
+
+	<center>
+		<h1> Don Howard Shepard </h1>
+		<object id="pamphlet" data="pics/pamphlet.pdf"></object>
+	</center>
+
+	<!-- <div class="pics" id="number"> 0 </div> -->
+	<br>
+
+	<img id="pic2" src="pics/picOfThing0.jpg" alt="thing gose hear">
+	
+	<div class="pics" >
+		<p> Pictures of Don, his frends and family </p>
+		<br/>
+		<button id="goStopButton" onclick="goStop()"> go </button>
+		<input id="customTime" type="number" placeholder="min: 1 max: 15 defult: 1" />
+	</div>
+
+	<center>
+		<object id="eulogy" data="pics/eulogy.pdf"></object>
+	</center>
+
+	<script>
+		
+		let numberOfPhotos = 86;
+		let spotOfTheThing = 0;
+		let moveToNexPic = false;
+		let timeDelay = 1;
+
+		//funciton that starts/stop the slidewhow
+		let goStop = ()=>{
+			if(moveToNexPic == false){
+				moveToNexPic = true;
+			}else{
+				moveToNexPic = false;
+			}
+			console.log("goStop");
+
+			if(moveToNexPic == true){
+				document.getElementById("goStopButton").innerHTML = "stop";
+			}else{
+				document.getElementById("goStopButton").innerHTML = "go";
+			}
+		}
+
+		//function that runs slideshow
+		let doTheThing = ()=>{
+			
+			if(moveToNexPic == true){
+				//set to go back to zero after hit max number	
+				if(spotOfTheThing > numberOfPhotos ){
+					spotOfTheThing = 0;
+					console.log("AAAAAAAAAAAA")
+				}
+
+				//for debug to see pic number
+				// document.getElementById(`number`).innerHTML = `${spotOfTheThing}`;
+				// console.log(spotOfTheThing);
+
+				// document.getElementById(`pics`).innerHTML = "ayy";
+				document.getElementById(`pic2`).src = `pics/picOfThing${spotOfTheThing}.jpg`;
+				spotOfTheThing++;
+
+			}
+
+			//set time delay
+			console.log(` vale of the customTime ${document.getElementById("customTime").value} `);
+			
+			if(document.getElementById("customTime").value > 0 && document.getElementById("customTime").value <= 15 ){
+				timeDelay = document.getElementById("customTime").value;
+			}
+
+			//callback
+			console.log("callback");
+			setTimeout(function(){ doTheThing() }, timeDelay * 1000);
+		}
+
+		doTheThing();
+
+	</script>
+
+</body>
+</html>
